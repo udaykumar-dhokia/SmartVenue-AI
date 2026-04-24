@@ -1,6 +1,10 @@
 # SmartVenue AI
 
+<img src="./app/public/1.png" />
+
 AI-powered venue intelligence platform for the Narendra Modi Stadium, Ahmedabad. Real-time crowd management, smart routing, and personalized attendee experiences during IPL cricket matches.
+
+<img src="./app/public/2.png" />
 
 ## Architecture
 
@@ -29,15 +33,15 @@ Mobile phone-framed interface simulating the attendee experience:
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4 + shadcn/ui |
-| Animations | Framer Motion |
-| AI | Google GenAI SDK (`@google/genai`) with Gemini 2.5 Flash |
-| Icons | Lucide React |
-| Font | Inter (Google Fonts) |
+| Layer      | Technology                                               |
+| ---------- | -------------------------------------------------------- |
+| Framework  | Next.js 16 (App Router)                                  |
+| Language   | TypeScript                                               |
+| Styling    | Tailwind CSS v4 + shadcn/ui                              |
+| Animations | Framer Motion                                            |
+| AI         | Google GenAI SDK (`@google/genai`) with Gemini 2.5 Flash |
+| Icons      | Lucide React                                             |
+| Font       | Inter (Google Fonts)                                     |
 
 ## Project Structure
 

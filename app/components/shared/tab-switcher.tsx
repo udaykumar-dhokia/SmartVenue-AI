@@ -26,7 +26,7 @@ export function TabSwitcher({ activeTab, onTabChange }: TabSwitcherProps) {
         className={`relative z-10 flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors w-1/2 justify-center ${activeTab === "admin" ? "text-white" : "text-zinc-500 hover:text-zinc-300"}`}
       >
         <Monitor size={16} />
-        <span>Ops Command</span>
+        <span>Admin</span>
       </button>
       <button
         id="tab-attendee"
@@ -34,7 +34,7 @@ export function TabSwitcher({ activeTab, onTabChange }: TabSwitcherProps) {
         className={`relative z-10 flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors w-1/2 justify-center ${activeTab === "attendee" ? "text-white" : "text-zinc-500 hover:text-zinc-300"}`}
       >
         <Smartphone size={16} />
-        <span>Attendee View</span>
+        <span>Attendee </span>
       </button>
     </div>
   );

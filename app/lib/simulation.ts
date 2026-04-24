@@ -43,11 +43,3 @@ export function generateMatchEvent(): MatchEvent {
   return { id: `evt-${Date.now()}`, time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit" }), type: e.type, description: e.d[Math.floor(Math.random() * e.d.length)] };
 }
 
-export function simulateScore(c: { runs: number; wickets: number; overs: string }) {
-  const r = [0, 0, 1, 1, 1, 2, 2, 4, 4, 6][Math.floor(Math.random() * 10)];
-  const w = Math.random() < 0.03;
-  const [wh, dc] = c.overs.split(".").map(Number);
-  let nd = (dc || 0) + 1, nw = wh;
-  if (nd >= 6) { nd = 0; nw += 1; }
-  return { runs: c.runs + r, wickets: w ? Math.min(c.wickets + 1, 10) : c.wickets, overs: `${nw}.${nd}` };
-}
