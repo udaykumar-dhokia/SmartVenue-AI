@@ -42,9 +42,10 @@ export function VenueMap({ zones, onZoneSelect, selectedZoneId }: VenueMapProps)
       const isSel = selectedZoneId === catId;
       const isHov = hoveredZone === catId;
 
+      const hasSelection = selectedZoneId !== null;
       group.querySelectorAll<SVGPathElement>("path[data-seat], path[tc-selectable]").forEach((p) => {
         p.style.fill = color;
-        p.style.opacity = isSel ? "0.85" : isHov ? "0.7" : "0.4";
+        p.style.opacity = isSel ? "0.9" : (hasSelection ? "0.15" : (isHov ? "0.75" : "0.4"));
         p.style.stroke = isSel ? "#fff" : isHov ? "#a1a1aa" : "#3f3f46";
         p.style.strokeWidth = isSel ? "1.5" : isHov ? "0.8" : "0.3";
         p.style.transition = "all 0.4s ease";
@@ -53,46 +54,40 @@ export function VenueMap({ zones, onZoneSelect, selectedZoneId }: VenueMapProps)
     });
   }, [zones, hoveredZone, selectedZoneId, svgContent]);
 
-  useEffect(() => {
-    if (!svgContainerRef.current || !svgContent) return;
-    const svg = svgContainerRef.current.querySelector("svg");
-    if (!svg) return;
-
-    const groups = svg.querySelectorAll<SVGGElement>("g[data-category]");
-    const cleanups: Array<() => void> = [];
-
-    groups.forEach((group) => {
-      const catId = group.getAttribute("data-category") || "";
-      const zone = zones.find((z) => z.id === catId);
-      if (!zone) return;
-
-      const onEnter = () => setHoveredZone(catId);
-      const onLeave = () => setHoveredZone(null);
-      const onClick = () => onZoneSelect(zone);
-
-      group.addEventListener("mouseenter", onEnter);
-      group.addEventListener("mouseleave", onLeave);
-      group.addEventListener("click", onClick);
-      cleanups.push(() => {
-        group.removeEventListener("mouseenter", onEnter);
-        group.removeEventListener("mouseleave", onLeave);
-        group.removeEventListener("click", onClick);
-      });
-    });
-
-    return () => cleanups.forEach((fn) => fn());
-  }, [zones, onZoneSelect, svgContent]);
+  const handleSvgInteraction = (e: React.MouseEvent, type: "click" | "hover") => {
+    const target = e.target as SVGElement;
+    const group = target.closest("g[data-category]");
+    
+    if (group) {
+      const catId = group.getAttribute("data-category");
+      if (type === "click") {
+        const zone = zones.find(z => z.id === catId);
+        if (zone) onZoneSelect(zone);
+      } else {
+        setHoveredZone(catId);
+      }
+    } else if (type === "hover") {
+      setHoveredZone(null);
+    }
+  };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     setTooltipPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    handleSvgInteraction(e, "hover");
   };
 
   const hd = zones.find((z) => z.id === hoveredZone);
 
   return (
-    <div ref={containerRef} className="relative w-full h-full flex items-center justify-center" onMouseMove={handleMouseMove}>
+    <div 
+      ref={containerRef} 
+      className="relative w-full h-full flex items-center justify-center" 
+      onMouseMove={handleMouseMove}
+      onClick={(e) => handleSvgInteraction(e, "click")}
+      onMouseLeave={() => setHoveredZone(null)}
+    >
       <div
         ref={svgContainerRef}
         className="w-full max-w-3xl aspect-square [&_svg]:w-full [&_svg]:h-full [&_svg]:drop-shadow-[0_0_60px_rgba(99,102,241,0.06)]"
