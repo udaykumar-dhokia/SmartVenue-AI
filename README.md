@@ -1,9 +1,10 @@
 # SmartVenue AI
 
-<img src="./app/public/1.png" />
-
 AI-powered venue intelligence platform for the Narendra Modi Stadium, Ahmedabad. Real-time crowd management, smart routing, and personalized attendee experiences during IPL cricket matches.
 
+<img src="./app/public/1.png" />
+
+<img src="./app/public/3.png" />
 <img src="./app/public/2.png" />
 
 ## Architecture
